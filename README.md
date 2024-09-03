@@ -1,3 +1,4 @@
+
 # HospitEase
 
 SIH 2024 Project
@@ -14,3 +15,55 @@ Department: IT Department, GNCTD
 
 Category: Software
 Theme: MedTech / BioTech / HealthTech
+
+
+## Project Overview
+
+Our system focuses on:
+
+- Implementing queuing models for OPDs
+- Managing bed availability
+- Streamlining patient admissions
+- Inventory management for medicines and consumables
+- We aim to create a comprehensive hospital-based solution that can be integrated into a city-wide module.
+## Project Goals
+
+- Reduce waiting times in OPDs
+- Optimize bed allocation
+- Streamline patient admission processes
+- Improve inventory management of medicines and consumables
+- Integrate with existing NIC modules
+- Develop a scalable solution for city-wide implementation
+
+We aim to create a comprehensive hospital-based solution that can be integrated into a city-wide module.
+## Authors
+
+- [@SmoggyOwO](https://github.com/SmoggyOwO)
+
+- [@Adarsh097](https://github.com/Adarsh097)
+
+- [@Shivanshu840](https://github.com/Shivanshu840)
+
+- [@Abhijeet14d](https://github.com/Abhijeet14d)
+
+- [@VISHAL12222783](https://github.com/VISHAL12222783)
+
+
+
+## Tech Stack
+
+**Client:** Next.js, Recoil, TailwindCSS
+
+**Server:** Hono
+
+**Database:** PostgreSQL
+
+**ORM:** Prisma
+
+**DevOps:** Docker, Kubernetes
+
+
+## License
+
+[GNU](https://www.gnu.org/licenses/)
+
