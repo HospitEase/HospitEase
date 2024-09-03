@@ -10,7 +10,7 @@ Description: Technological solution as per queuing models in OPDs/availability o
 
 Organization: Government of NCT of Delhi
 
-Department:	IT Department, GNCTD
+Department: IT Department, GNCTD
 
 Category: Software
 Theme: MedTech / BioTech / HealthTech
