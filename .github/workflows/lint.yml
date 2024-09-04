@@ -29,6 +29,3 @@ jobs:
 
       - name: Check formatting
         run: pnpm run format
-
-      - name: Upload linting and formatting results
-        uses: actions/upload-artifact@v4
