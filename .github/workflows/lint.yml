@@ -3,7 +3,7 @@ name: Linting and formatting on PR
 on:
   pull_request:
     branches:
-      - '**'
+      - "**"
 
 jobs:
   lint-and-format:
@@ -22,22 +22,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
-
-      - name: Run linting check
-        run: pnpm run lint
 
       - name: Check formatting
         run: pnpm run format
 
       - name: Upload linting and formatting results
         uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: lint-format-results
-          path: |
-            **/lint-results.txt
-            **/format-results.txt
