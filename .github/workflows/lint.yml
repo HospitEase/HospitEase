@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  cache-and-install:
+  pnpm-install:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +31,7 @@ jobs:
   Continuous-Integration:
 
     name: Performs linting, formatting on the application
-    needs: cache-and-install
+    needs: pnpm-install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the Repository
