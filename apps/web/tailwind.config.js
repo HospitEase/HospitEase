@@ -9,11 +9,11 @@ module.exports = {
     "./layouts/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors:{
-      'white': '#ffffff',
-      'black': '#000000',
-      'green': '#15803d',
-      'blue': '#4f46e5',
+    colors: {
+      white: "#ffffff",
+      black: "#000000",
+      green: "#15803d",
+      blue: "#4f46e5",
     },
   },
   plugins: [],
