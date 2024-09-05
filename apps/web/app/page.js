@@ -1,3 +1,12 @@
+
 export default function Home() {
-  return <div className="bg-red-800">Hello World</div>;
+  return (
+    <main>
+      <h1>Welcome to Hospit-Ease</h1>
+      <p>
+        We are a healthcare provider that offers a range of services to help you
+        live a healthy life.
+      </p>
+    </main>
+  );
 }
