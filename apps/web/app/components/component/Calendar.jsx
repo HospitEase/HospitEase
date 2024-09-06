@@ -7,7 +7,9 @@ export default function Calendar() {
       <div className="bg-white p-4 rounded-md shadow-md mb-4">
         <div className="flex justify-between items-center mb-4">
           <div className="text-medium">August 2021</div>
-          <Button variant="link" className="underline">View all</Button>
+          <Button variant="link" className="underline">
+            View all
+          </Button>
         </div>
         <div className="flex justify-between mb-2">
           {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
@@ -22,7 +24,7 @@ export default function Calendar() {
                   {30 + index}
                 </div>
               </div>
-            )
+            ),
           )}
         </div>
       </div>

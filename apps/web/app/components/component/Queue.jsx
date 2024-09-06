@@ -10,7 +10,7 @@ import {
 
 export default function Queue() {
   return (
-    <div >
+    <div>
       <Table>
         <TableHeader>
           <TableRow>

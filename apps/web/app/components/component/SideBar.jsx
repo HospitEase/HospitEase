@@ -1,12 +1,12 @@
 export default function SideBar() {
   return (
-      <aside className="w-16 bg-black text-white flex flex-col items-center py-4 space-y-4">
-        <HeartIcon className="w-6 h-6" />
-        <MailIcon className="w-6 h-6" />
-        <CalendarIcon className="w-6 h-6" />
-        <ClipboardIcon className="w-6 h-6" />
-        <SettingsIcon className="w-6 h-6" />
-      </aside>
+    <aside className="w-16 bg-black text-white flex flex-col items-center py-4 space-y-4">
+      <HeartIcon className="w-6 h-6" />
+      <MailIcon className="w-6 h-6" />
+      <CalendarIcon className="w-6 h-6" />
+      <ClipboardIcon className="w-6 h-6" />
+      <SettingsIcon className="w-6 h-6" />
+    </aside>
   );
 }
 
