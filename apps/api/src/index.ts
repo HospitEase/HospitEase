@@ -10,7 +10,7 @@ app.get("/", (c) => {
 });
 
 app.route("/home", userRoute);
-app.route("/home",adminRoute);
-app.route("/home",patientRoute);
+app.route("/home", adminRoute);
+app.route("/home", patientRoute);
 
 export default app;
