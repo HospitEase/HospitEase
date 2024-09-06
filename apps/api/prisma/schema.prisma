@@ -1,20 +1,64 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-datasource db {
-  provider = "sql"
-  url      = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
-}
-
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model Patient {
+  patientId        String   @id @default(uuid())
+  name             String
+  dob              DateTime
+  address          String
+  contact          String
+  sex              String
+  bedNo            String
+  ayushmanCard     String
+  diagnosisHistory String
+  opdbeds  OPDBed[]
+
+  userId  String? 
+  user    User?    @relation(fields: [userId], references: [userId]) 
+}
+
+model OPDBed {
+  hospitalId String
+  patientId  String
+  bedStatus  String
+
+  patient  Patient  @relation(fields: [patientId], references: [patientId])
+  hospital Hospital @relation(fields: [hospitalId], references: [hospitalId])
+
+  @@id([hospitalId, patientId])
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
+  userId    String   @id @default(uuid())
+  useremail String   @unique
+  password  String
+  username  String
+  patients  Patient[] 
+}
+
+model Medicine {
+  medicineId   String   @id @default(uuid())
+  name         String
+  manufactured DateTime
+  expiry       DateTime
+}
+
+model Admin {
+  adminId  String @id @default(uuid())
+  username String
+  password String
+}
+
+model Hospital {
+  hospitalId String    @id @default(uuid())
+  hospitalName String
+  opdbeds    OPDBed[]
 }
