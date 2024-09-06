@@ -1,4 +1,3 @@
-
 # HospitEase
 
 SIH 2024 Project
@@ -16,7 +15,6 @@ Department: IT Department, GNCTD
 Category: Software
 Theme: MedTech / BioTech / HealthTech
 
-
 ## Project Overview
 
 Our system focuses on:
@@ -26,6 +24,7 @@ Our system focuses on:
 - Streamlining patient admissions
 - Inventory management for medicines and consumables
 - We aim to create a comprehensive hospital-based solution that can be integrated into a city-wide module.
+
 ## Project Goals
 
 - Reduce waiting times in OPDs
@@ -36,6 +35,7 @@ Our system focuses on:
 - Develop a scalable solution for city-wide implementation
 
 We aim to create a comprehensive hospital-based solution that can be integrated into a city-wide module.
+
 ## Authors
 
 - [@SmoggyOwO](https://github.com/SmoggyOwO)
@@ -47,8 +47,6 @@ We aim to create a comprehensive hospital-based solution that can be integrated 
 - [@Abhijeet14d](https://github.com/Abhijeet14d)
 
 - [@VISHAL12222783](https://github.com/VISHAL12222783)
-
-
 
 ## Tech Stack
 
@@ -62,8 +60,6 @@ We aim to create a comprehensive hospital-based solution that can be integrated 
 
 **DevOps:** Docker, Kubernetes
 
-
 ## License
 
 [GNU](https://www.gnu.org/licenses/)
-
