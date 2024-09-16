@@ -17,8 +17,6 @@ export async function adminMiddleware(c: Context, next: Next) {
     const user = await verify(token, c.env.JWT_SECRET);
     const adminId = user.adminId;
 
-   
-
     if (adminId) {
       c.set("adminId", adminId);
       await next();
@@ -30,5 +28,3 @@ export async function adminMiddleware(c: Context, next: Next) {
     return c.json({ msg: "error while hiting this route" });
   }
 }
-
-

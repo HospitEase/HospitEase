@@ -1,21 +1,28 @@
-import { Hono } from 'hono';
-import { PrismaClient } from '@prisma/client/edge';
-import { middleWare as userAuth } from '../middleware/user';
+import { Hono } from "hono";
+import { PrismaClient } from "@prisma/client/edge";
+import { middleWare as userAuth } from "../middleware/user";
 
 const patientRouter = new Hono<{
-  Bindings:{
-    DATABASE_URL:string
-  }
+  Bindings: {
+    DATABASE_URL: string;
+  };
 }>();
 
-
 // Create a patient and allot one bed if available
-patientRouter.post('/',userAuth, async (c) => {
-  const { name, dob, address, contact, sex, ayushmanCard, diagnosisHistory, userId } = await c.req.json();
+patientRouter.post("/", userAuth, async (c) => {
+  const {
+    name,
+    dob,
+    address,
+    contact,
+    sex,
+    ayushmanCard,
+    diagnosisHistory,
+    userId,
+  } = await c.req.json();
   const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL
+    datasourceUrl: c.env.DATABASE_URL,
   });
-
 
   const patient = await prisma.patient.create({
     data: {
@@ -30,49 +37,48 @@ patientRouter.post('/',userAuth, async (c) => {
     },
   });
 
- 
   const availableBeds = await prisma.oPDBed.findMany({
     where: {
-      bedStatus: 'empty', 
+      bedStatus: "empty",
     },
   });
 
-  let bedAssignmentMessage = 'No bed available';
+  let bedAssignmentMessage = "No bed available";
 
-  
   if (availableBeds.length > 0) {
-    const bedToAssign = availableBeds[0]; 
+    const bedToAssign = availableBeds[0];
 
     await prisma.oPDBed.update({
       where: {
-        hospitalId_patientId: { hospitalId: bedToAssign.hospitalId, patientId: bedToAssign.patientId },
+        hospitalId_patientId: {
+          hospitalId: bedToAssign.hospitalId,
+          patientId: bedToAssign.patientId,
+        },
       },
       data: {
-        bedStatus: 'full', 
-        patientId: patient.patientId, 
+        bedStatus: "full",
+        patientId: patient.patientId,
       },
     });
 
     bedAssignmentMessage = `Bed assigned at Hospital ID: ${bedToAssign.hospitalId}`;
   }
 
-  
   return c.json({
     patient,
     bedAssignment: bedAssignmentMessage,
   });
 });
 
-
-patientRouter.get('/', async (c) => {
+patientRouter.get("/", async (c) => {
   const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL
+    datasourceUrl: c.env.DATABASE_URL,
   });
   const patients = await prisma.patient.findMany({
     include: {
       opdbeds: {
         include: {
-          hospital: true, 
+          hospital: true,
         },
       },
     },
@@ -81,7 +87,7 @@ patientRouter.get('/', async (c) => {
   // Map patients to include relevant bed and hospital details
   const patientsWithBedInfo = patients.map((patient) => ({
     ...patient,
-    bedStatus: patient.opdbeds.length > 0 ? 'Assigned' : 'Not Assigned',
+    bedStatus: patient.opdbeds.length > 0 ? "Assigned" : "Not Assigned",
     hospital: patient.opdbeds.length > 0 ? patient.opdbeds[0].hospital : null,
   }));
 
@@ -89,10 +95,10 @@ patientRouter.get('/', async (c) => {
 });
 
 // Get a specific patient by ID along with bed and hospital information
-patientRouter.get('/:patientId', async (c) => {
-  const patientId = c.req.param('patientId');
+patientRouter.get("/:patientId", async (c) => {
+  const patientId = c.req.param("patientId");
   const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL
+    datasourceUrl: c.env.DATABASE_URL,
   });
 
   const patient = await prisma.patient.findUnique({
@@ -100,18 +106,18 @@ patientRouter.get('/:patientId', async (c) => {
     include: {
       opdbeds: {
         include: {
-          hospital: true, 
+          hospital: true,
         },
       },
     },
   });
 
-  if (!patient) return c.json({ message: 'Patient not found' }, 404);
+  if (!patient) return c.json({ message: "Patient not found" }, 404);
 
   // Include bed and hospital information in the response
   const patientWithBedInfo = {
     ...patient,
-    bedStatus: patient.opdbeds.length > 0 ? 'Assigned' : 'Not Assigned',
+    bedStatus: patient.opdbeds.length > 0 ? "Assigned" : "Not Assigned",
     hospital: patient.opdbeds.length > 0 ? patient.opdbeds[0].hospital : null,
   };
 

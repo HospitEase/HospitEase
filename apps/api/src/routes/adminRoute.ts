@@ -3,7 +3,7 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { jwt, sign } from "hono/jwt";
 import { adminMiddleware } from "../middleware/admin";
-import {hash,compare} from 'bcrypt'
+import { hash, compare } from "bcrypt";
 
 export const adminRoute = new Hono<{
   Bindings: {
@@ -19,7 +19,7 @@ adminRoute.post("/admin/signup", async (c) => {
 
   const body = await c.req.json();
   try {
-    const password = await hash(body.password,10);
+    const password = await hash(body.password, 10);
     const res = await prisma.admin.create({
       data: {
         username: body.username,
@@ -37,34 +37,33 @@ adminRoute.post("/admin/signup", async (c) => {
   }
 });
 
-adminRoute.post("/admin/signin", async(c)=>{
+adminRoute.post("/admin/signin", async (c) => {
   const body = await c.req.json();
   const prisma = new PrismaClient({
-    datasourceUrl:c.env.DATABASE_URL
+    datasourceUrl: c.env.DATABASE_URL,
   });
 
-  try{
+  try {
     const res = await prisma.admin.findFirst({
-      where:{
-        username:body.username,
+      where: {
+        username: body.username,
       },
-      select:{
-        adminId:true,
-        password:true
-      }
-    })
-    
-    if(!res || !(await compare(body.password,res.password))){
-      return c.json({msg:"invalid credentials"},401)
+      select: {
+        adminId: true,
+        password: true,
+      },
+    });
+
+    if (!res || !(await compare(body.password, res.password))) {
+      return c.json({ msg: "invalid credentials" }, 401);
     }
-    
-    const token = await sign({adminId:res},c.env.JWT_SECRET);
-    return c.json({token,res},200);
-  }catch(error){
-    return c.json({"msg":"something went wrong while admin login"})
+
+    const token = await sign({ adminId: res }, c.env.JWT_SECRET);
+    return c.json({ token, res }, 200);
+  } catch (error) {
+    return c.json({ msg: "something went wrong while admin login" });
   }
 });
-
 
 // only admin can populate thee hospital databse and only admin allow here
 adminRoute.post("/admin/hospital", adminMiddleware, async (c) => {
@@ -92,7 +91,6 @@ adminRoute.post("/admin/hospital", adminMiddleware, async (c) => {
   }
 });
 
-adminRoute.post("/admin/opdBed", async(c)=>{
+adminRoute.post("/admin/opdBed", async (c) => {
   const body = await c.req.json();
-  
-})
+});
