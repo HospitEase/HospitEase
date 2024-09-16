@@ -1,8 +1,9 @@
-import CheckReport from "../component/CheckReport";
-import SideBar from "../component/SideBar";
-import TopBar from "../component/TopBar";
-import Visit from "../component/Visit";
-import Messenger from "../component/Messenger";
+import CheckReport from "@/components/component/CheckReport";
+import SideBar from "@/components/component/SideBar";
+import TopBar from "@/components/component/Topbar";
+import Visit from "@/components/component/Visit";
+import Messenger from "@/components/component/Messenger";
+import PastReports from "@/components/component/PastReports";
 
 export default function DoctorDashboard() {
   return (
@@ -10,11 +11,18 @@ export default function DoctorDashboard() {
       <SideBar />
       <main className="flex-1 p-6">
         <TopBar />
-        <Visit />
-        <section className="grid grid-cols-2 gap-4">
-          <CheckReport />
-          <Messenger />
-        </section>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <PastReports />
+            <Visit />
+          </div>
+          <div>
+            <section className="grid grid-rows-2 gap-4">
+              <CheckReport />
+              <Messenger />
+            </section>
+          </div>
+        </div>
       </main>
     </div>
   );

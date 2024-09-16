@@ -1,5 +1,5 @@
-import Calendar from "./Calendar";
-import Queue from "./Queue";
+import Calendar from "@/components/component/Calendar";
+import Queue from "@/components/component/Queue";
 
 export default function Visit() {
   return (
