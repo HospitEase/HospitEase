@@ -7,8 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model Patient {
   patientId        String   @id @default(uuid())
   name             String
@@ -16,20 +14,21 @@ model Patient {
   address          String
   contact          String
   sex              String
-  bedNo            String
   ayushmanCard     String
   diagnosisHistory String
-  opdbeds  OPDBed[]
 
-  userId  String? 
-  user    User?    @relation(fields: [userId], references: [userId]) 
+  // Relations
+  opdbeds OPDBed[]   // Relation with OPDBed/Queue
+  userId  String?    // Optional user who created the patient record
+  user    User?      @relation(fields: [userId], references: [userId]) 
 }
 
-model OPDBed {
+model OPDBed { // Represents Queue management
   hospitalId String
   patientId  String
-  bedStatus  String
+  bedStatus  Opdstatus
 
+  // Relations
   patient  Patient  @relation(fields: [patientId], references: [patientId])
   hospital Hospital @relation(fields: [hospitalId], references: [hospitalId])
 
@@ -41,7 +40,9 @@ model User {
   useremail String   @unique
   password  String
   username  String
-  patients  Patient[] 
+
+  // Relation
+  patients  Patient[] // One user can create multiple patients
 }
 
 model Medicine {
@@ -58,7 +59,19 @@ model Admin {
 }
 
 model Hospital {
-  hospitalId String    @id @default(uuid())
+  hospitalId   String   @id @default(uuid())
   hospitalName String
-  opdbeds    OPDBed[]
+  opdbeds      OPDBed[] // Relation with OPDBed/Queue
+}
+
+enum status {
+  alloted
+  pending
+  failed
+}
+
+enum Opdstatus {
+  empty
+  full
+
 }

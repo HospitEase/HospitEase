@@ -1,5 +1,7 @@
 import { Hono, Context, Next } from "hono";
 import { verify, sign, decode } from "hono/jwt";
+import { adminRoute } from "../routes/adminRoute";
+import { PrismaClient } from "@prisma/client/extension";
 
 export async function adminMiddleware(c: Context, next: Next) {
   const token = c.req.header("authorization") || "";
@@ -9,11 +11,16 @@ export async function adminMiddleware(c: Context, next: Next) {
     return c.json({ msg: "Invalid token" });
   }
 
-  try {
-    const user = await verify(token, c.env.JWT_KEY);
+  console.log(token);
 
-    if (user.adminId) {
-      c.set("adminId", user.adminId);
+  try {
+    const user = await verify(token, c.env.JWT_SECRET);
+    const adminId = user.adminId;
+
+   
+
+    if (adminId) {
+      c.set("adminId", adminId);
       await next();
     } else {
       return c.json({ msg: "Invalid credentials" });
@@ -23,3 +30,5 @@ export async function adminMiddleware(c: Context, next: Next) {
     return c.json({ msg: "error while hiting this route" });
   }
 }
+
+
