@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
-import { middleWare as userAuth } from "../middleware/user";
+import { withAccelerate } from "@prisma/extension-accelerate";
+import { middleWare  } from "../middleware/user";
 
 const patientRouter = new Hono<{
   Bindings: {
@@ -9,7 +10,7 @@ const patientRouter = new Hono<{
 }>();
 
 // Create a patient and allot one bed if available
-patientRouter.post("/", userAuth, async (c) => {
+patientRouter.post("/", middleWare, async (c) => {
   const {
     name,
     dob,
@@ -22,7 +23,7 @@ patientRouter.post("/", userAuth, async (c) => {
   } = await c.req.json();
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
-  });
+  }).$extends(withAccelerate());
 
   const patient = await prisma.patient.create({
     data: {
@@ -99,7 +100,7 @@ patientRouter.get("/:patientId", async (c) => {
   const patientId = c.req.param("patientId");
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
-  });
+  }).$extends(withAccelerate());
 
   const patient = await prisma.patient.findUnique({
     where: { patientId },
