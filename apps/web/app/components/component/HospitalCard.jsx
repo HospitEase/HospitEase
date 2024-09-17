@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function HospitalCard() {
   const id = 1;
   return (
-    <Link href={`/hospital/${id}`}>
+    <Link href={`/hospitals/${id}`}>
       <div>
         <div className="pt-4 cursor-pointer">
           <div>
