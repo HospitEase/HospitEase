@@ -8,7 +8,7 @@ import { middleWare } from "../middleware/user";
 export const userRoute = new Hono<{
   Bindings: {
     DATABASE_URL: string;
-    JWT_KEY: string;
+    JWT_SECRET: string;
   };
 }>();
 
@@ -58,7 +58,7 @@ userRoute.post("/Login", async (c) => {
       return c.json({ msg: "invalid credentials" });
     }
 
-    const token = await sign({ userId: res }, c.env.DATABASE_URL);
+    const token = await sign({ userId: res }, c.env.J);
 
     return c.json({ token: token, userId: res });
   } catch (error) {

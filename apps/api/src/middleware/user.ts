@@ -8,9 +8,11 @@ export async function middleWare(c: Context, next: Next) {
     c.status(403);
     return c.json({ msg: "Invalid token" });
   }
+  console.log(token);
 
   try {
-    const user = await verify(token, c.env.JWT_KEY);
+    const user = await verify(token, c.env.JWT_SECRET);
+    console.log(user);
 
     if (user.userId) {
       c.set("userId", user.userId);

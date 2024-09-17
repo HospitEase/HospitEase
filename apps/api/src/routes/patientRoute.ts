@@ -10,7 +10,7 @@ const patientRouter = new Hono<{
 }>();
 
 // Create a patient and allot one bed if available
-patientRouter.post("/", middleWare, async (c) => {
+patientRouter.post("/patient-details", middleWare, async (c) => {
   const {
     name,
     dob,
