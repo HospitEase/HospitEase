@@ -13,6 +13,7 @@ export async function middleWare(c: Context, next: Next) {
   try {
     const user = await verify(token, c.env.JWT_SECRET);
     console.log(user);
+    console.log(user);
 
     if (user.userId) {
       c.set("userId", user.userId);

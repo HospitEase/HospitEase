@@ -6,12 +6,32 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useState } from "react";
 
 export default function SignupPage() {
   const router = useRouter();
-  const handleSignup = () => {
-    router.push("dashboard");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleSignup = async () => {
+    const res = await axios.post("http://127.0.0.1:8787/home/signup", {
+      username: name,
+      useremail: email,
+      password: password,
+    });
+
+    const token = res.data;
+    console.log(token);
+    if (!token) {
+      alert("Kindly signup again");
+    } else {
+      sessionStorage.setItem("token", token);
+      router.push("dashboard");
+    }
   };
+
   return (
     <div className="flex h-screen bg-gray-100">
       <div className="flex-1 flex flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
@@ -31,18 +51,16 @@ export default function SignupPage() {
 
           <div className="mt-8">
             <div>
-              <div>
-                <Button variant="outline" className="w-full">
-                  <Image
-                    src="/google.svg"
-                    alt="Google logo"
-                    width={20}
-                    height={20}
-                    className="mr-2"
-                  />
-                  Sign up with Google
-                </Button>
-              </div>
+              <Button variant="outline" className="w-full">
+                <Image
+                  src="/google.svg"
+                  alt="Google logo"
+                  width={20}
+                  height={20}
+                  className="mr-2"
+                />
+                Sign up with Google
+              </Button>
 
               <div className="mt-6 relative">
                 <div
@@ -57,89 +75,97 @@ export default function SignupPage() {
               </div>
             </div>
 
-            <div className="mt-6">
-              <form action="#" method="POST" className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Full Name
-                  </label>
-                  <div className="mt-1">
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      autoComplete="name"
-                      required
-                    />
-                  </div>
+            {/* Replace form with div */}
+            <div className="mt-6 space-y-6">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Full Name
+                </label>
+                <div className="mt-1">
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    autoComplete="name"
+                    required
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                  />
                 </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email
-                  </label>
-                  <div className="mt-1">
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                    />
-                  </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Email
+                </label>
+                <div className="mt-1">
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
                 </div>
+              </div>
 
-                <div className="space-y-1">
+              <div className="space-y-1">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Password
+                </label>
+                <div className="mt-1">
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <Checkbox id="remember-me" />
                   <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
+                    htmlFor="remember-me"
+                    className="ml-2 block text-sm text-gray-900"
                   >
-                    Password
+                    I agree to the{" "}
+                    <a href="#" className="text-blue-600 hover:blue-500">
+                      Terms
+                    </a>{" "}
+                    and{" "}
+                    <a href="#" className="text-blue-600 hover:blue-500">
+                      Privacy Policy
+                    </a>
                   </label>
-                  <div className="mt-1">
-                    <Input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      required
-                    />
-                  </div>
                 </div>
+              </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <Checkbox id="remember-me" />
-                    <label
-                      htmlFor="remember-me"
-                      className="ml-2 block text-sm text-gray-900"
-                    >
-                      I agree to the{" "}
-                      <a href="#" className="text-blue-600 hover:blue-500">
-                        Terms
-                      </a>{" "}
-                      and{" "}
-                      <a href="#" className="text-blue-600 hover:blue-500">
-                        Privacy Policy
-                      </a>
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <Button
-                    onClick={handleSignup}
-                    className="w-full bg-gray-900 text-white"
-                  >
-                    Sign up
-                  </Button>
-                </div>
-              </form>
+              <div>
+                <Button
+                  onClick={handleSignup} // Use onClick instead of onSubmit
+                  className="w-full bg-gray-900 text-white"
+                >
+                  Sign up
+                </Button>
+              </div>
             </div>
           </div>
 

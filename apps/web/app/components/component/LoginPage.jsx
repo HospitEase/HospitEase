@@ -6,11 +6,27 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import axios from "axios";
 
 export default function LoginPage() {
   const router = useRouter();
-  const handleLogin = () => {
-    router.push("dashboard");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async () => {
+    const res = await axios.post("http://127.0.0.1:8787/home/Login", {
+      useremail: email,
+      password: password,
+    });
+
+    const token = res.data.msg;
+    console.log(token);
+    if (!token) {
+      alert("Kindly signup again");
+    } else {
+      sessionStorage.setItem("token", token);
+      router.push("dashboard");
+    }
   };
   return (
     <div className="flex h-screen bg-gray-100">
@@ -58,7 +74,8 @@ export default function LoginPage() {
             </div>
 
             <div className="mt-6">
-              <form action="#" method="POST" className="space-y-6">
+              {/* Changed from form to div */}
+              <div className="space-y-6">
                 <div>
                   <label
                     htmlFor="email"
@@ -73,6 +90,9 @@ export default function LoginPage() {
                       type="email"
                       autoComplete="email"
                       required
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
                     />
                   </div>
                 </div>
@@ -91,6 +111,9 @@ export default function LoginPage() {
                       type="password"
                       autoComplete="current-password"
                       required
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
                     />
                   </div>
                 </div>
@@ -118,14 +141,14 @@ export default function LoginPage() {
 
                 <div>
                   <Button
-                    type="submit"
+                    type="button" // Changed type to "button"
                     onClick={handleLogin}
                     className="w-full bg-gray-900 text-white"
                   >
                     Log in
                   </Button>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
 
