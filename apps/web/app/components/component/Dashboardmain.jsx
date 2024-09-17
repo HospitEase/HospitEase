@@ -37,13 +37,14 @@ export default function LandingPage() {
             <span className="text-muted-foreground">from 200+ reviews</span>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-gray-100 p-4 rounded-lg">
+        <div className="">
+          {/* <div className="bg-gray-100 p-4 rounded-lg">
             <Image
               src="/doctor.jpg"
               width={200}
-              height={200}
+              height={500}
               alt="home1"
+              quality={100}
               className="w-full h-auto rounded"
             />
           </div>
@@ -61,8 +62,10 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="bg-gray-100 p-4 rounded-lg">
-              {/*  place the component here */}
-              <p className="text-sm text-muted-foreground">Users Active</p>
+            <Image src="/Pencil.png" width={400} 
+            height={150}
+            layout="responsive"
+            quality={100} alt="Pencil" className="object-cover" />
             </div>
           </div>
           <div className="col-span-2 bg-[#1c3f39] p-4 rounded-lg text-white">
@@ -72,6 +75,29 @@ export default function LandingPage() {
             </div>
             <div className="h-16 bg-[#27574f] rounded"></div>
             <p className="mt-2 text-sm">Saving</p>
+          </div> */}
+          <div className="relative aspect-video">
+            {/* Option 1: Local video file */}
+            <video
+              className="w-full h-full rounded-lg object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              <source src="/hero.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Option 2: YouTube embed (uncomment to use) */}
+            {/* <iframe
+            className="w-full h-full rounded-lg"
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe> */}
           </div>
         </div>
       </div>
