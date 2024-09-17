@@ -8,7 +8,7 @@ import { middleWare } from "../middleware/user";
 export const userRoute = new Hono<{
   Bindings: {
     DATABASE_URL: string;
-    JWT_KEY: string;
+    JWT_SECRET: string;
   };
 }>();
 
