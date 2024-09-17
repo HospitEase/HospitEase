@@ -1,43 +1,74 @@
-import React from "react";
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
-export default function Navbar() {
+export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div>
-      <nav className="bg-green p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="text-white text-2xl font-bold">
-            <a href="/"> Hospit-Ease</a>
-          </div>
-          <div className="flex space-x-4">
-            <a href="/" className="text-white hover:text-gray-500">
-              Home
-            </a>
-            <a href="/about" className="text-white hover:text-gray-200">
-              About
-            </a>
-            <a href="/services" className="text-white hover:text-gray-200">
-              Services
-            </a>
-            <a href="/contact" className="text-white hover:text-gray-200">
-              Contact
-            </a>
-          </div>
-          <div className="flex space-x-4">
-            <a
-              href="/login"
-              className="text-white hover:text-gray-200 px-4 py-2 rounded-lg hover:bg-blue"
-            >
-              Login
-            </a>
-            <a
-              href="/signup"
-              className="text-white hover:text-gray-200 px-4 py-2 rounded-lg hover:bg-blue"
-            >
-              Sign Up
-            </a>
-          </div>
+    <header className="bg-white shadow-md">
+      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <Link href="/" className="flex items-center space-x-2">
+          <Image
+            src="/logo.jpeg"
+            width={50}
+            height={50}
+            alt="logo"
+            className="rounded-full hover:border-2 hover:border-[#1fa49f]"
+          />
+          <span className="text-xl font-bold text-gray-800 tracking-wide">
+            Hospit-Ease
+          </span>
+        </Link>
+
+        <nav className="hidden md:flex space-x-6">
+          <Link href="/" className="text-gray-600 hover:text-emerald-600">
+            Home
+          </Link>
+          <Link href="/about" className="text-gray-600 hover:text-emerald-600">
+            About
+          </Link>
+          <Link
+            href="/services"
+            className="text-gray-600 hover:text-emerald-600"
+          >
+            Services
+          </Link>
+          <Link
+            href="/contact"
+            className="text-gray-600 hover:text-emerald-600"
+          >
+            Contact
+          </Link>
+        </nav>
+
+        <div className="flex items-center space-x-4">
+          <Link
+            href="/signup"
+            className="bg-[#1c3f39] text-white px-4 py-2 rounded-md hover:bg-emerald-100 hover:text-[#1fa49f] transition duration-300"
+          >
+            Login
+          </Link>
         </div>
-      </nav>
-    </div>
+
+        {/* Mobile menu button */}
+        <button className="md:hidden text-gray-600 hover:text-gray-800">
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
   );
 }
