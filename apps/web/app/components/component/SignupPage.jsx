@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -39,26 +40,19 @@ export default function SignupPage() {
           <div>
             <div className="flex items-center">
               <div className="h-6 w-6 bg-gray-900 rounded-full"></div>
-              <span className="ml-2 text-xl font-semibold">HospitEase</span>
+              <div className="ml-2 text-xl font-semibold">HospitEase</div>
             </div>
-            <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
+            <div className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
               Create an account
-            </h2>
-            <p className="mt-2 text-sm text-gray-600">
+            </div>
+            <div className="mt-2 text-sm text-gray-600">
               Sign up to get started with our service.
-            </p>
+            </div>
           </div>
 
           <div className="mt-8">
             <div>
               <Button variant="outline" className="w-full">
-                <Image
-                  src="/google.svg"
-                  alt="Google logo"
-                  width={20}
-                  height={20}
-                  className="mr-2"
-                />
                 Sign up with Google
               </Button>
 
@@ -70,26 +64,18 @@ export default function SignupPage() {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">or</span>
+                  <div className="px-2 bg-white text-gray-500">or</div>
                 </div>
               </div>
             </div>
 
-            {/* Replace form with div */}
             <div className="mt-6 space-y-6">
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <div className="block text-sm font-medium text-gray-700">
                   Full Name
-                </label>
+                </div>
                 <div className="mt-1">
                   <Input
-                    id="name"
-                    name="name"
-                    type="text"
-                    autoComplete="name"
                     required
                     onChange={(e) => {
                       setName(e.target.value);
@@ -98,18 +84,11 @@ export default function SignupPage() {
                 </div>
               </div>
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <div className="block text-sm font-medium text-gray-700">
                   Email
-                </label>
+                </div>
                 <div className="mt-1">
                   <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
                     required
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -119,18 +98,12 @@ export default function SignupPage() {
               </div>
 
               <div className="space-y-1">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <div className="block text-sm font-medium text-gray-700">
                   Password
-                </label>
+                </div>
                 <div className="mt-1">
                   <Input
-                    id="password"
-                    name="password"
                     type="password"
-                    autoComplete="current-password"
                     required
                     onChange={(e) => {
                       setPassword(e.target.value);
@@ -141,20 +114,17 @@ export default function SignupPage() {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <Checkbox id="remember-me" />
-                  <label
-                    htmlFor="remember-me"
-                    className="ml-2 block text-sm text-gray-900"
-                  >
+                  <Checkbox required />
+                  <div className="ml-2 block text-sm text-gray-900">
                     I agree to the{" "}
-                    <a href="#" className="text-blue-600 hover:blue-500">
+                    <Link href="#" className="text-blue-600 hover:blue-500">
                       Terms
-                    </a>{" "}
+                    </Link>{" "}
                     and{" "}
-                    <a href="#" className="text-blue-600 hover:blue-500">
+                    <Link href="#" className="text-blue-600 hover:blue-500">
                       Privacy Policy
-                    </a>
-                  </label>
+                    </Link>
+                  </div>
                 </div>
               </div>
 
@@ -169,38 +139,36 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <p className="mt-10 text-sm text-center text-gray-500">
+          <div className="mt-10 text-sm text-center text-gray-500">
             Already have an account?{" "}
-            <a
+            <Link
               href="/patient/login"
               className="font-semibold leading-6 text-blue-600 hover:text-blue-500"
             >
               Log in
-            </a>
-          </p>
+            </Link>
+          </div>
         </div>
       </div>
       <div className="hidden lg:block relative w-0 flex-1">
         <Image
           className="absolute inset-0 h-full w-full object-cover"
           src="/placeholder.svg?height=1080&width=1920"
-          alt="Background image"
           width={1920}
           height={1080}
         />
         <div className="absolute inset-0 bg-gray-700 opacity-50"></div>
         <div className="absolute inset-0 flex flex-col justify-end p-12 text-white">
           <div className="max-w-2xl">
-            <h2 className="text-4xl font-bold mb-4">
+            <div className="text-4xl font-bold mb-4">
               Behind every great healthcare professional is the power to make
               informed decisions.
-            </h2>
+            </div>
             <div className="flex items-center mb-4">
               <div className="flex-shrink-0">
                 <Image
                   className="h-12 w-12 rounded-full"
                   src="/placeholder.svg?height=48&width=48"
-                  alt="Profile picture"
                   width={48}
                   height={48}
                 />
