@@ -10,7 +10,7 @@ export const patientRoutes = new Hono<{
   };
 }>();
 
-patientRoutes.post("/patient-details", middleWare, async (c) => {
+patientRoutes.post("/patient-details", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
@@ -37,8 +37,11 @@ patientRoutes.post("/patient-details", middleWare, async (c) => {
       status: "Waiting",
       userId,
     },
+    select: {
+      patientId: true,
+    },
   });
-  console.log(patient);
+
   // Check for available beds
   const availableBeds = await prisma.oPDBed.findMany({
     where: {
@@ -139,7 +142,6 @@ patientRoutes.post("/beds/assign", async (c) => {
   await sendNotification(
     patientToAssign.contact,
     "Your bed has been assigned!",
-    "",
   );
 
   return c.json({
@@ -164,11 +166,7 @@ patientRoutes.post("/notify", async (c) => {
 
   const message = `Dear ${patient.name}, your bed has been assigned at the hospital.`;
 
-  await sendNotification(patient.contact, message, {
-    accountSid: process.env.TWILIO_ACCOUNT_SID,
-    authToken: process.env.TWILIO_AUTH_TOKEN,
-    twilioPhoneNumber: process.env.TWILIO_PHONE_NUMBER,
-  });
+  await sendNotification(patient.contact, message);
 
   return c.json({ message: "Notification sent successfully" });
 });

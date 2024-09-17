@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import { cn } from "./components/lib/utils";
 import "./globals.css";
+import HydrationZustand from "@/components/component/HydrationZustand";
 
 const fontHeading = Inter({
   subsets: ["latin"],
@@ -20,7 +21,7 @@ export default function Layout({ children }) {
       <body
         className={cn("antialiased", fontHeading.variable, fontBody.variable)}
       >
-        {children}
+        <HydrationZustand>{children}</HydrationZustand>
       </body>
     </html>
   );

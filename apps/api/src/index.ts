@@ -8,6 +8,8 @@ import sendNotification from "./routes/Notification"; // Import sendNotification
 
 const app = new Hono();
 
+app.use("/home/*", cors());
+
 // Example route for sending a notification
 app.post("/send-notification", async (c) => {
   try {
@@ -18,7 +20,7 @@ app.post("/send-notification", async (c) => {
     }
 
     // Use environment variables from c.env
-    await sendNotification(to, message, c.env);
+    await sendNotification(to, message);
 
     return c.json({ message: "Notification sent successfully" });
   } catch (error) {

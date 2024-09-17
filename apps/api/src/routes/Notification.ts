@@ -1,9 +1,10 @@
 import twilio from "twilio";
 
-const sendNotification = async (to: string, message: string, env: any) => {
-  const accountSid = env.TWILIO_ACCOUNT_SID;
-  const authToken = env.TWILIO_AUTH_TOKEN;
-  const twilioPhoneNumber = env.TWILIO_PHONE_NUMBER;
+const sendNotification = async (to: string, message: string) => {
+  const accountSid = "ACc4201677df835c9781d9817aab20ad1a";
+  const authToken = "32b5acb774792ade2d4ebc9a547d30f5";
+  const twilioPhoneNumber = "+14243757732";
+  const mynumber = "+917543933647";
 
   if (!accountSid || !authToken || !twilioPhoneNumber) {
     console.error("Twilio environment variables are not set.");
@@ -19,7 +20,7 @@ const sendNotification = async (to: string, message: string, env: any) => {
 
   const body = new URLSearchParams({
     From: twilioPhoneNumber,
-    To: to,
+    To: mynumber,
     Body: message,
   });
 
