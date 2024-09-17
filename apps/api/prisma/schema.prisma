@@ -1,3 +1,5 @@
+// prisma/schema.prisma
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,7 +10,7 @@ datasource db {
 }
 
 model Patient {
-  patientId        String   @id @default(uuid())
+  patientId        String        @id @default(uuid())
   name             String
   dob              DateTime
   address          String
@@ -16,11 +18,12 @@ model Patient {
   sex              String
   ayushmanCard     String
   diagnosisHistory String
+  status           PatientStatus @default(Waiting) // Add default value
 
   // Relations
-  opdbeds OPDBed[]   // Relation with OPDBed/Queue
-  userId  String?    // Optional user who created the patient record
-  user    User?      @relation(fields: [userId], references: [userId]) 
+  opdbeds          OPDBed[]
+  userId           String?
+  user             User?         @relation(fields: [userId], references: [userId]) 
 }
 
 model OPDBed { // Represents Queue management
@@ -73,5 +76,10 @@ enum status {
 enum Opdstatus {
   empty
   full
-
+}
+enum PatientStatus {
+  Waiting
+  Admitted
+  Discharged
+ 
 }

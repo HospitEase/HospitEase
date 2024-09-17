@@ -1,16 +1,19 @@
-import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
+import sendNotification from "./Notification";
+import { Hono } from "hono";
 import { middleWare } from "../middleware/user";
 
-const patientRouter = new Hono<{
+export const patientRoutes = new Hono<{
   Bindings: {
     DATABASE_URL: string;
   };
 }>();
 
-// Create a patient and allot one bed if available
-patientRouter.post("/patient-details", middleWare, async (c) => {
+patientRoutes.post("/patient-details", middleWare, async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
   const {
     name,
     dob,
@@ -21,9 +24,6 @@ patientRouter.post("/patient-details", middleWare, async (c) => {
     diagnosisHistory,
     userId,
   } = await c.req.json();
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
 
   const patient = await prisma.patient.create({
     data: {
@@ -34,95 +34,141 @@ patientRouter.post("/patient-details", middleWare, async (c) => {
       sex,
       ayushmanCard,
       diagnosisHistory,
+      status: "Waiting",
       userId,
     },
   });
-
+  console.log(patient);
+  // Check for available beds
   const availableBeds = await prisma.oPDBed.findMany({
     where: {
       bedStatus: "empty",
     },
   });
 
-  let bedAssignmentMessage = "No bed available";
-
-  if (availableBeds.length > 0) {
-    const bedToAssign = availableBeds[0];
-
-    await prisma.oPDBed.update({
-      where: {
-        hospitalId_patientId: {
-          hospitalId: bedToAssign.hospitalId,
-          patientId: bedToAssign.patientId,
-        },
-      },
-      data: {
-        bedStatus: "full",
-        patientId: patient.patientId,
-      },
-    });
-
-    bedAssignmentMessage = `Bed assigned at Hospital ID: ${bedToAssign.hospitalId}`;
+  if (availableBeds.length === 0) {
+    return c.json({ message: "No beds available, added to queue", patient });
   }
 
-  return c.json({
-    patient,
-    bedAssignment: bedAssignmentMessage,
-  });
-});
-
-patientRouter.get("/", async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  });
-  const patients = await prisma.patient.findMany({
-    include: {
-      opdbeds: {
-        include: {
-          hospital: true,
-        },
+  const bedToAssign = availableBeds[0];
+  await prisma.oPDBed.update({
+    where: {
+      hospitalId_patientId: {
+        hospitalId: bedToAssign.hospitalId,
+        patientId: bedToAssign.patientId,
       },
+    },
+    data: {
+      bedStatus: "full",
+      patientId: patient.patientId,
     },
   });
 
-  // Map patients to include relevant bed and hospital details
-  const patientsWithBedInfo = patients.map((patient) => ({
-    ...patient,
-    bedStatus: patient.opdbeds.length > 0 ? "Assigned" : "Not Assigned",
-    hospital: patient.opdbeds.length > 0 ? patient.opdbeds[0].hospital : null,
-  }));
+  await prisma.patient.update({
+    where: { patientId: patient.patientId },
+    data: { status: "Admitted" },
+  });
 
-  return c.json(patientsWithBedInfo);
+  return c.json({ message: "Bed assigned successfully", patient });
 });
 
-// Get a specific patient by ID along with bed and hospital information
-patientRouter.get("/:patientId", async (c) => {
-  const patientId = c.req.param("patientId");
+patientRoutes.get("/beds/availability", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
-
-  const patient = await prisma.patient.findUnique({
-    where: { patientId },
+  const availableBeds = await prisma.oPDBed.findMany({
+    where: {
+      bedStatus: "empty",
+    },
     include: {
-      opdbeds: {
-        include: {
-          hospital: true,
-        },
-      },
+      hospital: true,
     },
   });
 
-  if (!patient) return c.json({ message: "Patient not found" }, 404);
-
-  // Include bed and hospital information in the response
-  const patientWithBedInfo = {
-    ...patient,
-    bedStatus: patient.opdbeds.length > 0 ? "Assigned" : "Not Assigned",
-    hospital: patient.opdbeds.length > 0 ? patient.opdbeds[0].hospital : null,
-  };
-
-  return c.json(patientWithBedInfo);
+  return c.json({ availableBeds });
 });
 
-export { patientRouter };
+patientRoutes.post("/beds/assign", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const availableBeds = await prisma.oPDBed.findMany({
+    where: {
+      bedStatus: "empty",
+    },
+  });
+
+  if (availableBeds.length === 0) {
+    return c.json({ message: "No available beds to assign" });
+  }
+
+  const waitingPatients = await prisma.patient.findMany({
+    where: {
+      status: "Waiting",
+    },
+    orderBy: {
+      patientId: "asc",
+    },
+  });
+
+  if (waitingPatients.length === 0) {
+    return c.json({ message: "No waiting patients in queue" });
+  }
+
+  const patientToAssign = waitingPatients[0];
+  const bedToAssign = availableBeds[0];
+
+  await prisma.oPDBed.update({
+    where: {
+      hospitalId_patientId: {
+        hospitalId: bedToAssign.hospitalId,
+        patientId: bedToAssign.patientId,
+      },
+    },
+    data: {
+      bedStatus: "full",
+      patientId: patientToAssign.patientId,
+    },
+  });
+
+  await prisma.patient.update({
+    where: { patientId: patientToAssign.patientId },
+    data: { status: "Admitted" },
+  });
+
+  await sendNotification(
+    patientToAssign.contact,
+    "Your bed has been assigned!",
+    "",
+  );
+
+  return c.json({
+    message: "Bed assigned and patient notified",
+    patientToAssign,
+  });
+});
+
+patientRoutes.post("/notify", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const { patientId } = await c.req.json();
+
+  const patient = await prisma.patient.findUnique({
+    where: { patientId },
+  });
+
+  if (!patient) {
+    return c.json({ message: "Patient not found" }, 404);
+  }
+
+  const message = `Dear ${patient.name}, your bed has been assigned at the hospital.`;
+
+  await sendNotification(patient.contact, message, {
+    accountSid: process.env.TWILIO_ACCOUNT_SID,
+    authToken: process.env.TWILIO_AUTH_TOKEN,
+    twilioPhoneNumber: process.env.TWILIO_PHONE_NUMBER,
+  });
+
+  return c.json({ message: "Notification sent successfully" });
+});
