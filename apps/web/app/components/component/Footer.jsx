@@ -1,66 +1,97 @@
-import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 
-function Footer() {
+export default function Footer() {
   return (
-    <footer className="bg-black p-4">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        <div className="text-white text-2xl font-bold mb-4 md:mb-0">
-          <a href="/">Hospit-Ease</a>
+    <footer className="bg-[#1c3f39] text-white py-8">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Contact Us</h2>
+            <p className="text-sm">
+              Punjab Health Systems Corporation,
+              <br />
+              Punjab School Education Board Building,
+              <br />
+              Block E, Phase-8, Sahibjada Ajit Singh Nagar, Mohali-16
+              <br />
+              0172 - 2232243 & 2232245
+              <br />
+              itcell.phsc[AT]gmail[DOT]com
+            </p>
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Important Links</h2>
+            <ul className="text-sm space-y-2">
+              <li>
+                <Link href="/accessibility">Accessibility Statement</Link>
+              </li>
+              <li>
+                <Link href="/terms">Terms & Conditions</Link>
+              </li>
+              <li>
+                <Link href="/sitemap">Sitemap</Link>
+              </li>
+              <li>
+                <Link href="/about">About</Link>
+              </li>
+              <li>
+                <Link href="/features">Features</Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Sitemap</h2>
+            <ul className="text-sm space-y-2">
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="/about">About</Link>
+              </li>
+              <li>
+                <Link href="/department">Department</Link>
+              </li>
+              <li>
+                <Link href="/features">Features</Link>
+              </li>
+              <li>
+                <Link href="/gallery">Gallery</Link>
+              </li>
+              <li>
+                <Link href="/contact">Contact Us</Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Others</h2>
+            <ul className="text-sm space-y-2">
+              <li>
+                <Link href="/accessibility">Accessibility Statement</Link>
+              </li>
+              <li>
+                <Link href="/terms">Terms & Conditions</Link>
+              </li>
+              <li>
+                <Link href="/sitemap">Sitemap</Link>
+              </li>
+              <li>
+                <Link href="/about">About</Link>
+              </li>
+              <li>
+                <Link href="/features">Features</Link>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="flex space-x-4 mb-4 md:mb-0">
-          <a href="/" className="text-white hover:text-gray-500">
-            Home
-          </a>
-          <a href="/about" className="text-white hover:text-gray-200">
-            About
-          </a>
-          <a href="/services" className="text-white hover:text-gray-200">
-            Services
-          </a>
-          <a href="/contact" className="text-white hover:text-gray-200">
-            Contact
-          </a>
+        <div className="mt-8 pt-8 border-t border-gray-700 text-sm text-center">
+          <p>
+            © Copyright Hospital Management Information Systems, All Rights
+            Reserved
+          </p>
+          <p>Designed by CDAC</p>
         </div>
-        <div className="flex space-x-4 mb-4 md:mb-0">
-          <a
-            href="/login"
-            className="text-white hover:text-gray-200 px-4 py-2 rounded-lg hover:bg-blue"
-          >
-            Login
-          </a>
-          <a
-            href="/signup"
-            className="text-white hover:text-gray-200 px-4 py-2 rounded-lg hover:bg-blue"
-          >
-            Sign Up
-          </a>
-        </div>
-        <div className="flex space-x-4">
-          <a
-            href="https://facebook.com"
-            className="text-white hover:text-gray-200"
-          >
-            <i className="fab fa-facebook-f"></i>
-          </a>
-          <a
-            href="https://twitter.com"
-            className="text-white hover:text-gray-200"
-          >
-            <i className="fab fa-twitter"></i>
-          </a>
-          <a
-            href="https://instagram.com"
-            className="text-white hover:text-gray-200"
-          >
-            <i className="fab fa-instagram"></i>
-          </a>
-        </div>
-      </div>
-      <div className="text-center text-white mt-4">
-        &copy; {new Date().getFullYear()} Hospit-Ease. All rights reserved.
       </div>
     </footer>
   );
 }
-
-export default Footer;
