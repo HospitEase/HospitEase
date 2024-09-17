@@ -18,7 +18,6 @@ adminRoute.post("/admin/signup", async (c) => {
 
   const body = await c.req.json();
   try {
-   
     const res = await prisma.admin.create({
       data: {
         username: body.username,
@@ -53,13 +52,12 @@ adminRoute.post("/admin/signin", async (c) => {
       },
     });
 
-   if(!res){
-    return c.json({"msg":"invalid credentials"})
-   }
+    if (!res) {
+      return c.json({ msg: "invalid credentials" });
+    }
     const token = await sign({ adminId: res }, c.env.JWT_SECRET);
     return c.json({ token, res }, 200);
   } catch (error) {
     return c.json({ msg: "something went wrong while admin login" });
   }
 });
-

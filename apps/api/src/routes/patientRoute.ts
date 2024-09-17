@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { middleWare  } from "../middleware/user";
+import { middleWare } from "../middleware/user";
 
 const patientRouter = new Hono<{
   Bindings: {

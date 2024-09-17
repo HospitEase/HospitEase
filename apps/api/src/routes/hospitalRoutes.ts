@@ -78,23 +78,27 @@ hospitalRouter.post("/:hospitalId/opdbeds", adminMiddleware, async (c) => {
   return c.json(opdBed);
 });
 
-hospitalRouter.put("/:hospitalId/opdbeds/:patientId", adminMiddleware, async (c) => {
-  const hospitalId = c.req.param("hospitalId");
-  const patientId = c.req.param("patientId");
-  const { bedStatus } = await c.req.json();
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
+hospitalRouter.put(
+  "/:hospitalId/opdbeds/:patientId",
+  adminMiddleware,
+  async (c) => {
+    const hospitalId = c.req.param("hospitalId");
+    const patientId = c.req.param("patientId");
+    const { bedStatus } = await c.req.json();
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
 
-  const updatedOPDBed = await prisma.oPDBed.update({
-    where: {
-      hospitalId_patientId: { hospitalId, patientId },
-    },
-    data: { bedStatus },
-  });
+    const updatedOPDBed = await prisma.oPDBed.update({
+      where: {
+        hospitalId_patientId: { hospitalId, patientId },
+      },
+      data: { bedStatus },
+    });
 
-  return c.json(updatedOPDBed);
-});
+    return c.json(updatedOPDBed);
+  },
+);
 
 hospitalRouter.delete(
   "/:hospitalId/opdbeds/:patientId",

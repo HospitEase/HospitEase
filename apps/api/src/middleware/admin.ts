@@ -1,8 +1,7 @@
 import { Hono, Context, Next } from "hono";
 import { verify, sign, decode } from "hono/jwt";
 
-
-export  async function adminMiddleware(c: Context, next: Next) {
+export async function adminMiddleware(c: Context, next: Next) {
   const token = c.req.header("authorization") || "";
 
   if (!token) {

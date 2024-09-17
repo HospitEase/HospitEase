@@ -19,7 +19,6 @@ userRoute.post("/signup", async (c) => {
 
   const body = await c.req.json();
   try {
-   
     const res = await prisma.user.create({
       data: {
         username: body.username,
@@ -48,17 +47,17 @@ userRoute.post("/Login", async (c) => {
     const res = await prisma.user.findFirst({
       where: {
         useremail: body.useremail,
-        password: body.password
+        password: body.password,
       },
       select: {
         userId: true,
         password: true,
       },
     });
-    if(!res){
-      return c.json({"msg":"invalid credentials"})
+    if (!res) {
+      return c.json({ msg: "invalid credentials" });
     }
-   
+
     const token = await sign({ userId: res }, c.env.DATABASE_URL);
 
     return c.json({ token: token, userId: res });
