@@ -40,7 +40,7 @@ export default function SignupPage() {
           <div>
             <div className="flex items-center">
               <div className="h-6 w-6 bg-gray-900 rounded-full"></div>
-              <div className="ml-2 text-xl font-semibold">HospitEase</div>
+              <div className="ml-2 text-xl font-semibold">HospitEase</div>,
             </div>
             <div className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
               Create an account
@@ -115,7 +115,7 @@ export default function SignupPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <Checkbox required />
-                  <div className="ml-2 block text-sm text-gray-900">
+                  <div className="ml-2 block text-sm text-gray-900 required">
                     I agree to the{" "}
                     <Link href="#" className="text-blue-600 hover:blue-500">
                       Terms

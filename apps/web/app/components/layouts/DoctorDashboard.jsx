@@ -4,8 +4,10 @@ import TopBar from "@/components/component/Topbar";
 import Visit from "@/components/component/Visit";
 import Messenger from "@/components/component/Messenger";
 import PastReports from "@/components/component/PastReports";
+import { useAuth } from "../hooks";
 
 export default function DoctorDashboard() {
+  useAuth();
   return (
     <div className="flex min-h-screen">
       <SideBar />

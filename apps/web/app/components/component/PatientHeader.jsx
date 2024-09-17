@@ -79,7 +79,7 @@ export default function AirbnbHeader() {
   };
 
   return (
-    <header className="border-b">
+    <header className="">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">HospitEase</div>
@@ -93,7 +93,7 @@ export default function AirbnbHeader() {
           </div>
         </div>
 
-        <div className="flex items-center justify-center py-4">
+        <div className="flex items-center justify-center py-4 mt-8">
           <div className="flex w-full max-w-3xl rounded-full border shadow-sm">
             <div className="flex-1 min-w-0 px-4 py-2">
               <div className="p-4">

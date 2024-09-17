@@ -15,9 +15,18 @@ import {
   SearchIcon,
   UserCircleIcon,
 } from "lucide-react";
+import BedComponent from "@/components/component/BedComponent";
+import axios from "axios";
+import AccountButton from "@/components/component/AccountButton";
 
 export default function Home() {
-  const images = ["/doctor.jpg", "/home1.jpg"];
+  const images = [
+    "/Photo1.jpg",
+    "/Photo2.jpg",
+    "/Photo3.jpg",
+    "/Photo4.jpg",
+    "/Photo5.jpg",
+  ];
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -25,8 +34,8 @@ export default function Home() {
     contact: "",
     sex: "",
     ayushmanCard: "",
-    diagnosticHistory: "",
-    isNewProblem: null,
+    diagnosisHistory: "",
+    status: "",
   });
 
   const handleInputChange = (e) => {
@@ -37,73 +46,101 @@ export default function Home() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Here you would typically send the data to an API or perform other actions
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:8787/home/patient-details",
+        formData,
+      );
+      setFormData(res.data);
+      alert("Data submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Failed to submit data.");
+    }
   };
 
   return (
     <div className="container mx-auto p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <div className="text-green-200 font-bold text-3xl">Hospit-Ease</div>
+        <div className="text-[#1c3f39]  font-bold text-3xl">Hospit-Ease</div>
         <div className="flex items-center space-x-4 bg-white rounded-full shadow-md p-2">
-          <Button variant="ghost">Anywhere</Button>
-          <Button variant="ghost">Any week</Button>
-          <Button variant="ghost">Add guests</Button>
-          <Button size="icon" className="bg-pink-500 text-white rounded-full">
+          <Button variant="ghost">Where</Button>
+          <Button variant="ghost">When</Button>
+          <Button variant="ghost">Whom</Button>
+          <Button
+            size="icon"
+            className="bg-[#1c3f39] text-white rounded-full hover:bg-emerald-100 hover:text-[#1c3f39]"
+          >
             <SearchIcon className="h-4 w-4" />
           </Button>
         </div>
+
         <div className="flex items-center space-x-4">
-          <Button variant="ghost">Airbnb your home</Button>
-          <Button variant="ghost" size="icon">
-            <GlobeIcon className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="outline"
-            className="flex items-center space-x-2 rounded-full"
-          >
-            <MenuIcon className="h-4 w-4" />
-            <UserCircleIcon className="h-6 w-6" />
-          </Button>
+          <AccountButton />
         </div>
       </div>
 
       {/* Listing Title */}
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-semibold">
-          Playdate at Polly Pocket's Compact
-        </h1>
-        <div className="flex space-x-4">
-          <Button variant="outline">Share</Button>
-          <Button variant="outline">Save</Button>
-        </div>
+        <h1 className="text-3xl font-semibold text-[#1c3f39]">Hospital</h1>
       </div>
 
       {/* Image Gallery */}
-      <div
+
+      {/* <div
         className="grid grid-cols-4 grid-rows-2 gap-2 mb-8"
         style={{ height: "400px" }}
-      >
-        <div className="col-span-2 row-span-2">
+      > */}
+      {/* <div className="relative col-span-2 row-span-2 w-full h-full">
           <Image
             src={images[0]}
             alt="Main view"
-            className="w-full h-full object-cover rounded-l-xl"
-            width={50}
-            height={50}
+            className="rounded-l-xl object-cover" // Adjust here if needed
+            layout="fill"
+            quality={100}
           />
-        </div>
-        {images.map((src, index) => (
-          <div key={src}>
+        </div> */}
+
+      {/* Smaller images (1x1 grid) */}
+      {/* {images.slice(1).map((src, index) => (
+          <div key={src} className="col-span-1 row-span-1">
             <Image
               src={src}
               className="w-full h-full object-cover rounded-r-xl"
-              width={500}
-              height={500}
-              alt={`Photo ${index + 1}`}
+              width={400} // Same aspect ratio as the main image
+              height={267} // Adjusted height to maintain uniformity
+              layout="responsive"
+              quality={100}
+              sizes="(max-width: 400px) 100vw, 400px"
+            />
+          </div>
+        ))} */}
+      {/* </div> */}
+
+      <div
+        className="grid grid-cols-4 grid-rows-2 gap-2"
+        style={{ height: "450px" }}
+      >
+        <div className="relative col-span-2 row-span-2">
+          <Image
+            src={images[0]}
+            alt="Main view"
+            className="rounded-l-xl object-cover"
+            layout="fill"
+            quality={100}
+          />
+        </div>
+        {images.slice(1, 5).map((src, index) => (
+          <div key={src} className="relative col-span-1 row-span-1">
+            <Image
+              src={src}
+              alt={`Image ${index + 2}`}
+              className="object-cover rounded-r-xl"
+              layout="fill"
+              quality={100}
             />
           </div>
         ))}
@@ -195,35 +232,33 @@ export default function Home() {
                 />
               </div>
               <div>
-                <Label htmlFor="diagnosticHistory">Diagnostic History</Label>
+                <Label htmlFor="diagnosisHistory">Diagnostic History</Label>
                 <Textarea
-                  id="diagnosticHistory"
-                  name="diagnosticHistory"
-                  value={formData.diagnosticHistory}
+                  id="diagnosisHistory"
+                  name="diagnosisHistory"
+                  value={formData.diagnosisHistory}
                   onChange={handleInputChange}
                 />
               </div>
               <div>
-                <Label>Is this a new problem?</Label>
+                <Label>Status</Label>
                 <RadioGroup
-                  name="isNewProblem"
-                  value={formData.isNewProblem}
+                  name="status"
+                  value={formData.status}
                   onValueChange={(value) =>
-                    setFormData((prevData) => ({
-                      ...prevData,
-                      isNewProblem: value,
-                    }))
+                    setFormData((prevData) => ({ ...prevData, status: value }))
                   }
                   className="flex space-x-4"
                 >
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="yes" id="newProblemYes" />
-                    <Label htmlFor="newProblemYes">Yes</Label>
+                    <RadioGroupItem value="Waiting" id="statusWaiting" />
+                    <Label htmlFor="statusWaiting">Waiting</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="no" id="newProblemNo" />
-                    <Label htmlFor="newProblemNo">No</Label>
+                    <RadioGroupItem value="InProgress" id="statusInProgress" />
+                    <Label htmlFor="statusInProgress">In Progress</Label>
                   </div>
+                  {/* Add other statuses here if needed */}
                 </RadioGroup>
               </div>
               <Button type="submit" className="w-full">
@@ -232,28 +267,9 @@ export default function Home() {
             </form>
           </div>
 
-          {/* Card Section */}
-          <div className="w-full md:w-1/3">
-            <Card>
-              <CardHeader>
-                <CardTitle>Patient Summary</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>Name: {formData.name}</p>
-                <p>Date of Birth: {formData.dob}</p>
-                <p>Contact: {formData.contact}</p>
-                <p>Sex: {formData.sex}</p>
-                <p>Ayushman Card: {formData.ayushmanCard}</p>
-                <p>
-                  New Problem:{" "}
-                  {formData.isNewProblem === "yes"
-                    ? "Yes"
-                    : formData.isNewProblem === "no"
-                      ? "No"
-                      : "Not specified"}
-                </p>
-              </CardContent>
-            </Card>
+          {/* Patient Summary Card */}
+          <div className="">
+            <BedComponent />
           </div>
         </div>
       </div>
