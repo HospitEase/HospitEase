@@ -1,6 +1,7 @@
 import Footer from "./components/component/Footer";
 import Navbar from "./components/component/Navbar";
 import Dashboardmain from "./components/component/Dashboardmain";
+import Infinitymovingcard from "./components/component/Infinitymovingcard";
 
 export default function Home() {
   return (
@@ -8,9 +9,9 @@ export default function Home() {
       <Navbar />
       <main className="flex-grow">
         <Dashboardmain />
+        <Infinitymovingcard />
       </main>
       <Footer />
-      Hello World
     </div>
   );
 }
