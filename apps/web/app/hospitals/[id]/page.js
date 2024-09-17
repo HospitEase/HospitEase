@@ -148,7 +148,9 @@ export default function Home() {
 
       {/* Patient Form */}
       <div className="mt-12">
-        <h2 className="text-2xl font-bold mb-4">Patient Information</h2>
+        <h2 className="text-2xl font-bold mb-4 text-[#1c3f39] ">
+          Patient Information
+        </h2>
         <div className="flex flex-col md:flex-row gap-8">
           {/* Form Section */}
           <div className="w-full md:w-2/3">
