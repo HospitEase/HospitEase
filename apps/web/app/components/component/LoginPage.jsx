@@ -155,7 +155,7 @@ export default function LoginPage() {
           <p className="mt-10 text-sm text-center text-gray-500">
             Don't have an account?{" "}
             <a
-              href="#"
+              href="/patient/signup"
               className="font-semibold leading-6 text-blue-600 hover:text-blue-500"
             >
               Sign up for free

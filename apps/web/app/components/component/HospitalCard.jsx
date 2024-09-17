@@ -12,7 +12,7 @@ export default function HospitalCard() {
               className="rounded-2xl h-60"
             ></img>
           </div>
-          <div className="pt-3">Gandu Hospital</div>
+          <div className="pt-3">Accha Hospital</div>
         </div>
       </div>
     </Link>

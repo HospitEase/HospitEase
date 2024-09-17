@@ -75,9 +75,7 @@ export default function AirbnbHeader() {
   };
 
   const handleSearch = () => {
-    router.push({
-      pathname: "/hospital",
-    });
+    router.push("/hospitals");
   };
 
   return (
