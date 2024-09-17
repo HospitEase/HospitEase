@@ -30,8 +30,8 @@ userRoute.post("/signup", async (c) => {
       },
     });
 
-    const token = await sign({ userId: res }, c.env.DATABASE_URL);
-    return c.json({ token: token });
+    const token = await sign({ userId: res }, c.env.JWT_SECRET);
+    return c.json(token);
   } catch (error) {
     return c.json({ msg: "something went wrong while signup" }, 500);
   }
@@ -58,12 +58,10 @@ userRoute.post("/Login", async (c) => {
       return c.json({ msg: "invalid credentials" });
     }
 
-    const token = await sign({ userId: res }, c.env.DATABASE_URL);
+    const token = await sign({ userId: res }, c.env.JWT_SECRET);
 
-    return c.json({ token: token, userId: res });
+    return c.json({ msg: token });
   } catch (error) {
     return c.json("error while login");
   }
 });
-
-userRoute.get("/opdBeds", middleWare, async (c) => {});
