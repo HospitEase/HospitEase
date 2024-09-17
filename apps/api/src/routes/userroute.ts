@@ -58,7 +58,7 @@ userRoute.post("/Login", async (c) => {
       return c.json({ msg: "invalid credentials" });
     }
 
-    const token = await sign({ userId: res }, c.env.J);
+    const token = await sign({ userId: res }, c.env.JWT_SECRET);
 
     return c.json({ token: token, userId: res });
   } catch (error) {
