@@ -1,7 +1,7 @@
 # prod
 dist/
 
-# dev
+
 .yarn/
 !.yarn/releases
 .vscode/*
@@ -11,16 +11,16 @@ dist/
 .idea/usage.statistics.xml
 .idea/shelf
 
-# deps
-node_modules/
+
+node_modules
 .wrangler
 
-# env
+
 .env
 .env.production
 .dev.vars
 
-# logs
+
 logs/
 *.log
 npm-debug.log*
@@ -29,5 +29,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# misc
+
 .DS_Store
+
+
+wrangler.toml
