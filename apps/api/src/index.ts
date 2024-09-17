@@ -4,6 +4,7 @@ import { adminRoute } from "./routes/adminRoute";
 import { patientRoutes } from "./routes/patientRoute";
 import { hospitalRouter } from "./routes/hospitalRoutes";
 import { cors } from "hono/cors";
+import sendNotification from "./routes/Notification"; // Import sendNotification function
 
 const app = new Hono();
 
@@ -12,11 +13,14 @@ app.use("/home/*", cors());
 // Example route for sending a notification
 app.post("/send-notification", async (c) => {
   try {
-    const { to, message } = await c.req.json(); // Expecting JSON with to and message
+    const { to, message } = await c.req.json(); // Expecting JSON with `to` and `message`
 
     if (!to || !message) {
       return c.json({ error: "Missing to or message field" }, { status: 400 });
     }
+
+    // Use environment variables from c.env
+    await sendNotification(to, message);
 
     return c.json({ message: "Notification sent successfully" });
   } catch (error) {

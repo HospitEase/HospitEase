@@ -21,9 +21,9 @@ model Patient {
   status           PatientStatus @default(Waiting) // Add default value
 
   // Relations
-  opdbeds          OPDBed[]
-  userId           String?
-  user             User?         @relation(fields: [userId], references: [userId])
+  opdbeds OPDBed[]   // Relation with OPDBed/Queue
+  userId  String?    // Optional user who created the patient record
+  user    User?      @relation(fields: [userId], references: [userId])
 }
 
 model OPDBed { // Represents Queue management

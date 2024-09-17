@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
+import sendNotification from "./Notification";
 import { Hono } from "hono";
 import { middleWare } from "../middleware/user";
 
@@ -36,8 +37,11 @@ patientRoutes.post("/patient-details", async (c) => {
       status: "Waiting",
       userId,
     },
+    select: {
+      patientId: true,
+    },
   });
-  console.log(patient);
+
   // Check for available beds
   const availableBeds = await prisma.oPDBed.findMany({
     where: {
@@ -138,11 +142,31 @@ patientRoutes.post("/beds/assign", async (c) => {
   await sendNotification(
     patientToAssign.contact,
     "Your bed has been assigned!",
-    "",
   );
 
   return c.json({
     message: "Bed assigned and patient notified",
     patientToAssign,
   });
+});
+
+patientRoutes.post("/notify", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const { patientId } = await c.req.json();
+
+  const patient = await prisma.patient.findUnique({
+    where: { patientId },
+  });
+
+  if (!patient) {
+    return c.json({ message: "Patient not found" }, 404);
+  }
+
+  const message = `Dear ${patient.name}, your bed has been assigned at the hospital.`;
+
+  await sendNotification(patient.contact, message);
+
+  return c.json({ message: "Notification sent successfully" });
 });
