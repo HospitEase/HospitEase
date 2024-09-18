@@ -18,6 +18,7 @@ import {
 import BedComponent from "@/components/component/BedComponent";
 import axios from "axios";
 import AccountButton from "@/components/component/AccountButton";
+import TopBar from "@/components/component/TopBar";
 
 export default function Home() {
   const images = [
@@ -66,28 +67,13 @@ export default function Home() {
   return (
     <div className="container mx-auto p-4">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="text-[#1c3f39]  font-bold text-3xl">Hospit-Ease</div>
-        <div className="flex items-center space-x-4 bg-white rounded-full shadow-md p-2">
-          <Button variant="ghost">Where</Button>
-          <Button variant="ghost">When</Button>
-          <Button variant="ghost">Whom</Button>
-          <Button
-            size="icon"
-            className="bg-[#1c3f39] text-white rounded-full hover:bg-emerald-100 hover:text-[#1c3f39]"
-          >
-            <SearchIcon className="h-4 w-4" />
-          </Button>
-        </div>
-
-        <div className="flex items-center space-x-4">
-          <AccountButton />
-        </div>
-      </div>
+      <TopBar />
 
       {/* Listing Title */}
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-semibold text-[#1c3f39]">Hospital</h1>
+        <h1 className="text-3xl font-semibold text-[#1c3f39] mt-4">
+          Fortis Hospital
+        </h1>
       </div>
 
       <div

@@ -73,6 +73,14 @@ export default function BedManagement() {
                 transition-colors duration-200 cursor-pointer shadow-md
               `}
               title={`Bed ${bed.number}: ${bed.status}`}
+              onClick={() => {
+                if (bed.status === "available") {
+                  bed.status = "occupied";
+                  ("bg-rose-500 hover:bg-rose-600");
+                } else {
+                  alert("Can't pick occupied beds");
+                }
+              }}
             >
               {bed.number}
             </div>
