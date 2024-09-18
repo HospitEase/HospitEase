@@ -30,6 +30,21 @@ export default function BedManagement() {
     (bed) => bed.status === "available",
   ).length;
 
+  const handleBedClick = (bedId) => {
+    // Create a copy of the beds array
+    const updatedBeds = selectedWard.beds.map((bed) =>
+      bed.id === bedId
+        ? {
+            ...bed,
+            status: bed.status === "available" ? "occupied" : "available",
+          }
+        : bed,
+    );
+
+    // Update the state with the modified beds array
+    setSelectedWard({ ...selectedWard, beds: updatedBeds });
+  };
+
   return (
     <div className="mx-auto p-4 max-w-sm bg-gray-100 rounded-lg shadow-lg h-[calc(100vh-2rem)] flex flex-col">
       <h1 className="text-2xl font-bold mb-4 text-gray-800">
@@ -75,8 +90,7 @@ export default function BedManagement() {
               title={`Bed ${bed.number}: ${bed.status}`}
               onClick={() => {
                 if (bed.status === "available") {
-                  bed.status = "occupied";
-                  ("bg-rose-500 hover:bg-rose-600");
+                  handleBedClick(bed.id);
                 } else {
                   alert("Can't pick occupied beds");
                 }
