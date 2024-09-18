@@ -34,7 +34,7 @@ export default function LoginPage() {
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
             <div className="flex items-center">
-              <div className="h-6 w-6 bg-gray-900 rounded-full"></div>
+              <div className="h-6 w-6 bg-[#1c3f39] rounded-full"></div>
               <span className="ml-2 text-xl font-semibold text-[#1c3f39]">
                 HospitEase
               </span>

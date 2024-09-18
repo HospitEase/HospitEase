@@ -64,6 +64,7 @@ model Admin {
 model Hospital {
   hospitalId   String   @id @default(uuid())
   hospitalName String
+  hospitalAddress String   @default("Delhi")
   opdbeds      OPDBed[] // Relation with OPDBed/Queue
 }
 
