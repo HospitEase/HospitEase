@@ -39,7 +39,8 @@ export default function Home() {
         const res = await axios.get(
           "http://127.0.0.1:8787/home/hospital-deatails",
         );
-        setHospitalDetails(res.data); // Assuming the response data is an array of hospital objects
+        setHospitalDetails(res.data);
+        console.log(res); // Assuming the response data is an array of hospital objects
       } catch (error) {
         console.error("Error fetching hospital details:", error);
       }
@@ -50,7 +51,7 @@ export default function Home() {
 
   // Filter hospitals by the selected location
   const filteredHospitals = hospitalDetails.filter(
-    (hospital) => hospital.location === location,
+    (hospital) => hospital.hospitalAddress === location,
   );
 
   return (
@@ -63,7 +64,7 @@ export default function Home() {
             {filteredHospitals.map((hospital, index) => (
               <HospitalCard
                 key={index}
-                id={hospital.id}
+                id={hospital.hospitalId}
                 hospitalName={hospital.hospitalName}
                 hospitalAddress={hospital.hospitalAddress}
               />

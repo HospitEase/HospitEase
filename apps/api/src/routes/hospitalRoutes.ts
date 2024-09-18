@@ -33,6 +33,22 @@ hospitalRouter.get("/hospital-deatails", async (c) => {
   return c.json(hospitals);
 });
 
+hospitalRouter.get("/hospital-deatails/hospitalId", async (c) => {
+  const hospitalId = c.req.param("hospitalId");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const hospitals = await prisma.hospital.findFirst({
+    where: {
+      hospitalId: hospitalId,
+    },
+    select: {
+      hospitalName: true,
+    },
+  });
+  return c.json(hospitals);
+});
+
 hospitalRouter.put("/:hospitalId", adminMiddleware, async (c) => {
   const hospitalId = c.req.param("hospitalId");
   const prisma = new PrismaClient({
