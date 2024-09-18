@@ -95,12 +95,12 @@ export default function Home() {
       {/* Listing Title */}
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-semibold text-[#1c3f39] mt-4">
-          {/* {hospitalName || "Loading..."} Show a placeholder or loading text */}
+          {/* {hospitalName} */}
           Fortis Hospital
         </h1>
       </div>
 
-      <div
+      {/* <div
         className="grid grid-cols-4 grid-rows-2 gap-2"
         style={{ height: "450px" }}
       >
@@ -124,7 +124,7 @@ export default function Home() {
             />
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* Patient Form */}
       <div className="mt-32 pt-10">

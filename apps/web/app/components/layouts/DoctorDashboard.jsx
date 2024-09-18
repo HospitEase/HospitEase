@@ -7,7 +7,6 @@ import PastReports from "@/components/component/PastReports";
 import { useAuth } from "../hooks";
 
 export default function DoctorDashboard() {
-  useAuth();
   return (
     <div className="flex min-h-screen">
       <SideBar />

@@ -12,7 +12,7 @@ export default function HospitalCard({
   const queryString = new URLSearchParams(data).toString();
 
   return (
-    <Link href={`/hospital?id=1`}>
+    <Link href={`/hospital?${queryString}`}>
       <div>
         <div className="pt-4 cursor-pointer">
           <div>
