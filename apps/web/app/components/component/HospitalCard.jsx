@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function HospitalCard({ hospitalName, id }) {
+export default function HospitalCard({ hospitalName, id, hospitalAddress }) {
   return (
     <Link href={`/hospitals/${id}`}>
       <div>
@@ -13,7 +13,7 @@ export default function HospitalCard({ hospitalName, id }) {
             />
           </div>
           <div className="pt-3">{hospitalName}</div>
-          {/* <div className="pt-3">{hospitalAddress}</div> */}
+          <div className="pt-3">{hospitalAddress}</div>
         </div>
       </div>
     </Link>
