@@ -10,7 +10,7 @@ const hospitalRouter = new Hono<{
 }>();
 
 hospitalRouter.post("/hospital", adminMiddleware, async (c) => {
-  const { hospitalName } = await c.req.json();
+  const { hospitalName, hospitalAddress } = await c.req.json();
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
@@ -18,6 +18,7 @@ hospitalRouter.post("/hospital", adminMiddleware, async (c) => {
   const hospital = await prisma.hospital.create({
     data: {
       hospitalName,
+      hospitalAddress,
     },
   });
 
@@ -37,11 +38,11 @@ hospitalRouter.put("/:hospitalId", adminMiddleware, async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
-  const { hospitalName } = await c.req.json();
+  const { hospitalAddress } = await c.req.json();
 
   const updatedHospital = await prisma.hospital.update({
     where: { hospitalId },
-    data: { hospitalName },
+    data: { hospitalAddress },
   });
 
   return c.json(updatedHospital);
