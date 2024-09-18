@@ -2,7 +2,7 @@ import twilio from "twilio";
 
 const sendNotification = async (to: string, message: string) => {
   const accountSid = "ACc4201677df835c9781d9817aab20ad1a";
-  const authToken = "32b5acb774792ade2d4ebc9a547d30f5";
+  const authToken = "18418e06c690524915cbebf30e2b343f";
   const twilioPhoneNumber = "+14243757732";
   const mynumber = "+917543933647";
 

@@ -25,7 +25,12 @@ export default function Home() {
   const searchParams = useSearchParams();
   const location = searchParams.get("location");
 
-  const mapUrl = coordinates[location];
+  // Get map URL from coordinates or set a default URL
+  const mapUrl = coordinates[location] || coordinates["New_Delhi"];
+
+  // Log location and mapUrl for debugging
+  console.log("Location:", location);
+  console.log("Map URL:", mapUrl);
 
   // Fetch hospital details from the backend
   useEffect(() => {
@@ -34,7 +39,8 @@ export default function Home() {
         const res = await axios.get(
           "http://127.0.0.1:8787/home/hospital-deatails",
         );
-        setHospitalDetails(res.data); // Assuming the response data is an array of hospital objects
+        setHospitalDetails(res.data);
+        console.log(res); // Assuming the response data is an array of hospital objects
       } catch (error) {
         console.error("Error fetching hospital details:", error);
       }
@@ -43,6 +49,11 @@ export default function Home() {
     getDetails();
   }, []);
 
+  // Filter hospitals by the selected location
+  const filteredHospitals = hospitalDetails.filter(
+    (hospital) => hospital.hospitalAddress === location,
+  );
+
   return (
     <div>
       <PatientHeader />
@@ -50,9 +61,10 @@ export default function Home() {
         <div className="grid grid-cols-2 w-full">
           {/* Hospital Cards */}
           <div className="grid grid-cols-2 gap-4 p-4">
-            {hospitalDetails.slice(0, 4).map((hospital, index) => (
+            {filteredHospitals.map((hospital, index) => (
               <HospitalCard
                 key={index}
+                id={hospital.hospitalId}
                 hospitalName={hospital.hospitalName}
                 hospitalAddress={hospital.hospitalAddress}
               />

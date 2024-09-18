@@ -1,8 +1,18 @@
+"use client";
+
 import Link from "next/link";
 
-export default function HospitalCard({ hospitalName, id }) {
+export default function HospitalCard({
+  key,
+  id,
+  hospitalName,
+  hospitalAddress,
+}) {
+  const data = { id: id };
+  const queryString = new URLSearchParams(data).toString();
+
   return (
-    <Link href={`/hospitals/${id}`}>
+    <Link href={`/hospital?id=1`}>
       <div>
         <div className="pt-4 cursor-pointer">
           <div>
@@ -13,7 +23,7 @@ export default function HospitalCard({ hospitalName, id }) {
             />
           </div>
           <div className="pt-3">{hospitalName}</div>
-          {/* <div className="pt-3">{hospitalAddress}</div> */}
+          <div className="pt-3">{hospitalAddress}</div>
         </div>
       </div>
     </Link>
