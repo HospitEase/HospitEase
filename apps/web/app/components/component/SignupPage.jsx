@@ -39,10 +39,13 @@ export default function SignupPage() {
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
             <div className="flex items-center">
-              <div className="h-6 w-6 bg-gray-900 rounded-full"></div>
-              <div className="ml-2 text-xl font-semibold">HospitEase</div>,
+              <div className="h-6 w-6 bg-[#1c3f39] rounded-full "></div>
+              <div className="ml-2 text-xl font-semibold text-[#1c3f39]">
+                HospitEase
+              </div>
+              ,
             </div>
-            <div className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
+            <div className="mt-6 text-3xl font-bold tracking-tight text-[#1c3f39]">
               Create an account
             </div>
             <div className="mt-2 text-sm text-gray-600">
@@ -52,7 +55,7 @@ export default function SignupPage() {
 
           <div className="mt-8">
             <div>
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full text-[#1c3f39]">
                 Sign up with Google
               </Button>
 
@@ -117,11 +120,11 @@ export default function SignupPage() {
                   <Checkbox required />
                   <div className="ml-2 block text-sm text-gray-900 required">
                     I agree to the{" "}
-                    <Link href="#" className="text-blue-600 hover:blue-500">
+                    <Link href="#" className="text-[#1c3f39] hover:blue-500">
                       Terms
                     </Link>{" "}
                     and{" "}
-                    <Link href="#" className="text-blue-600 hover:blue-500">
+                    <Link href="#" className="text-[#1c3f39]hover:blue-500">
                       Privacy Policy
                     </Link>
                   </div>
@@ -131,7 +134,7 @@ export default function SignupPage() {
               <div>
                 <Button
                   onClick={handleSignup} // Use onClick instead of onSubmit
-                  className="w-full bg-gray-900 text-white"
+                  className="w-full bg-[#1c3f39] text-white"
                 >
                   Sign up
                 </Button>
@@ -143,7 +146,7 @@ export default function SignupPage() {
             Already have an account?{" "}
             <Link
               href="/patient/login"
-              className="font-semibold leading-6 text-blue-600 hover:text-blue-500"
+              className="font-semibold leading-6 text-[#1c3f39] hover:text-blue-500"
             >
               Log in
             </Link>
@@ -151,28 +154,15 @@ export default function SignupPage() {
         </div>
       </div>
       <div className="hidden lg:block relative w-0 flex-1">
-        <Image
-          className="absolute inset-0 h-full w-full object-cover"
-          src="/placeholder.svg?height=1080&width=1920"
-          width={1920}
-          height={1080}
-        />
-        <div className="absolute inset-0 bg-gray-700 opacity-50"></div>
+        <div className="absolute inset-0 bg-[#285951] opacity-50"></div>
         <div className="absolute inset-0 flex flex-col justify-end p-12 text-white">
           <div className="max-w-2xl">
-            <div className="text-4xl font-bold mb-4">
+            <h2 className="text-4xl font-bold mb-4">
               Behind every great healthcare professional is the power to make
               informed decisions.
-            </div>
+            </h2>
             <div className="flex items-center mb-4">
-              <div className="flex-shrink-0">
-                <Image
-                  className="h-12 w-12 rounded-full"
-                  src="/placeholder.svg?height=48&width=48"
-                  width={48}
-                  height={48}
-                />
-              </div>
+              <div className="flex-shrink-0"></div>
               <div className="ml-4">
                 <div className="text-lg font-semibold">Dr. Jonathan Wells</div>
                 <div className="text-sm opacity-75">

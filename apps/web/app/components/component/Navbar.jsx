@@ -17,7 +17,7 @@ export default function Header() {
             alt="logo"
             className="rounded-full hover:border-2 hover:border-[#1fa49f]"
           />
-          <span className="text-xl font-bold text-gray-800 tracking-wide">
+          <span className="text-md font-semibold text-gray-800 tracking-wide">
             Hospit-Ease
           </span>
         </Link>

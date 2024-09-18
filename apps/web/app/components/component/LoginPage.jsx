@@ -50,7 +50,7 @@ export default function LoginPage() {
           <div className="mt-8">
             <div>
               <div>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full text-[#1c3f39]">
                   Log in with Google
                 </Button>
               </div>

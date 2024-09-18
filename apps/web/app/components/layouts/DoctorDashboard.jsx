@@ -1,6 +1,6 @@
 import CheckReport from "@/components/component/CheckReport";
 import SideBar from "@/components/component/SideBar";
-import TopBar from "@/components/component/Topbar";
+import TopBar from "@/components/component/DoctorTopbar";
 import Visit from "@/components/component/Visit";
 import Messenger from "@/components/component/Messenger";
 import PastReports from "@/components/component/PastReports";

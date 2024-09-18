@@ -22,7 +22,7 @@ export default function PatientDashboard() {
           <CardContent>
             <p>Date: August 15, 2023</p>
             <p>Location: Central Hospital</p>
-            <Button className="mt-4">Register Now</Button>
+            <Button className="mt-4 bg-[#1fa49f]">Register Now</Button>
           </CardContent>
         </Card>
 
@@ -36,7 +36,7 @@ export default function PatientDashboard() {
           <CardContent>
             <p>Online Webinar</p>
             <p>Date: September 1, 2023</p>
-            <Button className="mt-4">Join Webinar</Button>
+            <Button className="mt-4 bg-[#1fa49f]">Join Webinar</Button>
           </CardContent>
         </Card>
 
@@ -50,7 +50,7 @@ export default function PatientDashboard() {
           <CardContent>
             <p>Informational Session</p>
             <p>Date: August 25, 2023</p>
-            <Button className="mt-4">Learn More</Button>
+            <Button className="mt-4 bg-[#1fa49f]">Learn More</Button>
           </CardContent>
         </Card>
 
@@ -64,7 +64,7 @@ export default function PatientDashboard() {
           <CardContent>
             <p>Location: Central Clinic</p>
             <p>Available Dates: September 5-10, 2023</p>
-            <Button className="mt-4">Book Now</Button>
+            <Button className="mt-4 bg-[#1fa49f]">Book Now</Button>
           </CardContent>
         </Card>
 
@@ -75,10 +75,10 @@ export default function PatientDashboard() {
               Participate in the free vaccination drive
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className>
             <p>Date: September 20, 2023</p>
             <p>Location: Downtown Health Center</p>
-            <Button className="mt-4">Sign Up</Button>
+            <Button className="mt-4 bg-[#1fa49f]">Sign Up</Button>
           </CardContent>
         </Card>
 
@@ -91,7 +91,7 @@ export default function PatientDashboard() {
           </CardHeader>
           <CardContent>
             <p>Available 24/7</p>
-            <Button className="mt-4">Start Consultation</Button>
+            <Button className="mt-4 bg-[#1fa49f]">Start Consultation</Button>
           </CardContent>
         </Card>
       </div>

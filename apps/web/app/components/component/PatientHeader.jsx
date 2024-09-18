@@ -10,6 +10,10 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import AccountButton from "./AccountButton";
+import TopBar from "./TopBar";
 
 export default function AirbnbHeader() {
   const router = useRouter();
@@ -81,17 +85,7 @@ export default function AirbnbHeader() {
   return (
     <header className="">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex-shrink-0">HospitEase</div>
-
-          {/* Right side buttons */}
-          <div className="flex items-center">
-            <button className="flex items-center space-x-2 border rounded-full p-2 hover:shadow-md">
-              <Menu className="h-5 w-5 text-gray-500" />
-              <User className="h-5 w-5 text-gray-500" />
-            </button>
-          </div>
-        </div>
+        <TopBar />
 
         <div className="flex items-center justify-center py-4 mt-8">
           <div className="flex w-full max-w-3xl rounded-full border shadow-sm">
@@ -164,7 +158,7 @@ export default function AirbnbHeader() {
             </div>
 
             <button
-              className="bg-[#ff385c] text-white p-2 m-2 rounded-full hover:bg-[#e31c5f] transition-colors duration-200"
+              className="bg-[#1fa49f] text-white p-2 m-2 rounded-full transition-colors duration-200"
               onClick={handleSearch}
             >
               <Search className="h-5 w-16" />

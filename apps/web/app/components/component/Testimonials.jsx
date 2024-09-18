@@ -1,12 +1,16 @@
 "use client";
 
-import React from "react";
-import { infinitemovingcard } from "./ui/infinitemovingcard";
+import React, { useEffect, useState } from "react";
+import { InfiniteMovingCards } from "./ui/InfiniteMovingCards";
 
-export default function Infinitymovingcard() {
+export default function Testimonials() {
   return (
-    <div className="h-[25rem] rounded-md flex flex-col antialiased bg-white text-bold text-lg dark:bg-[#1c3f39] dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
-      <infinitemovingcard items={testimonials} direction="right" speed="slow" />
+    <div className="h-[25rem] rounded-md flex flex-col antialiased bg-white text-bold text-lg dark:bg-[white] dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+      <InfiniteMovingCards
+        items={testimonials}
+        direction="right"
+        speed="slow"
+      />
     </div>
   );
 }

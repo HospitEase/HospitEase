@@ -1,10 +1,14 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import { SearchIcon } from "lucide-react"; // Assuming you're using Lucide icons
 import { Button } from "../ui/button";
 import { MenuIcon } from "lucide-react";
 import { UserCircleIcon } from "lucide-react";
+import { Router, useRouter } from "next/navigation";
 
 export default function AccountButton() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -54,7 +58,7 @@ export default function AccountButton() {
           <ul className="py-1">
             <li>
               <a
-                href="/profile"
+                href="/patient/profile"
                 className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
               >
                 Go to Profile
@@ -63,8 +67,10 @@ export default function AccountButton() {
             <li>
               <button
                 className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                onClick={() => {
+                onClick={async () => {
                   // Implement your logout logic here
+                  await sessionStorage.removeItem("token");
+                  router.push("/patient/login");
                   console.log("Logging out...");
                 }}
               >
