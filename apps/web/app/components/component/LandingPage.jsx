@@ -24,7 +24,7 @@ export default function LandingPage() {
             size="lg"
             className="bg-[#1c3f39] text-white hover:bg-[#27574f] px-4 py-2 rounded-full"
             onClick={() => {
-              router.push("/patients/dashboard");
+              router.push("/patient/dashboard");
             }}
           >
             Book Your Slot

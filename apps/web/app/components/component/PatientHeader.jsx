@@ -23,16 +23,12 @@ export default function AirbnbHeader() {
   const [when, setWhen] = useState(new Date());
   const [whom, setWhom] = useState("");
   const localities = [
-    "New York",
-    "Los Angeles",
-    "Chicago",
-    "Houston",
-    "Phoenix",
-    "Philadelphia",
-    "San Antonio",
-    "San Diego",
-    "Dallas",
-    "San Jose",
+    "Modal_Town",
+    "Defence_Colony",
+    "Rohini",
+    "Dwarka",
+    "Chanakyapuri",
+    "New_Delhi",
   ];
   const handleWhomChange = (e) => {
     const query = e.target.value;
@@ -79,7 +75,9 @@ export default function AirbnbHeader() {
   };
 
   const handleSearch = () => {
-    router.push("/hospitals");
+    const data = { location: where };
+    const queryString = new URLSearchParams(data).toString();
+    router.push(`/hospitals?${queryString}`); // Note the '?' before the queryString
   };
 
   return (
